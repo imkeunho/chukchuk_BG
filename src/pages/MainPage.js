@@ -28,32 +28,40 @@ function MainPage(props) {
 
     return (
         <BasicLayout>
-            <div className="md:w-2/3 lg:w-3/4 px-5 py-3">
-                <Table borderless={true}>
+            <div className="w-full px-1">
+                <Table borderless={true} className="ml-3">
                     <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>상품</th>
-                        <th>수량</th>
-                        <th>금액</th>
-                        <th>삭제</th>
-                    </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>상품</th>
+                            <th>수량</th>
+                            <th>금액</th>
+                            <th>삭제</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {selectBox.map(boxId => <ProductComponent id={boxId} key={boxId} product={products}/>)}
                     <tr>
-                        <td colSpan={3}>
-                            합계 : {totalValue}
-                        </td>
+                        <td></td>
+                        <td></td>
+                        <td align={"right"}>합계 : </td>
+                        <td>{totalValue}</td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </Table>
-                <Button variant="primary"
-                        size="lg"
-                        onClick={addSelectBox}>
-                    +
-                </Button>
-                <button onClick={() => {console.log(orders)}}>order</button>
+                <div className="flex justify-between mx-3">
+                    <Button variant="primary"
+                            size="sm"
+                            onClick={addSelectBox}>
+                        +
+                    </Button>
+                    <Button variant="success"
+                            size="sm"
+                            onClick={() => {console.log(orders)}}>
+                        주문
+                    </Button>
+                </div>
             </div>
         </BasicLayout>
     );

@@ -64,7 +64,7 @@ function ProductComponent({id, product}) {
         <tr id={`box-${id}`}>
             <td>{id}</td>
             <td>
-                <Form.Select size="lg"
+                <Form.Select size="sm"
                              name="name"
                              onChange={getProduct}>
                     {product.map(item =>
@@ -75,7 +75,7 @@ function ProductComponent({id, product}) {
                 </Form.Select>
             </td>
             <td>
-                <Form.Select size="lg"
+                <Form.Select size="sm"
                              name="qty"
                              onChange={setQty}>
                     <option>0</option>
@@ -91,7 +91,7 @@ function ProductComponent({id, product}) {
             </td>
             <td>
                 <Button variant="danger"
-                        size="lg"
+                        size="sm"
                         onClick={() => removeSelectBox(id)} >
                     -
                 </Button>
