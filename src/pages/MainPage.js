@@ -29,6 +29,7 @@ function MainPage(props) {
     return (
         <BasicLayout>
             <div className="w-full px-1">
+                <form id="orderForm">
                 <Table borderless={true} className="ml-3">
                     <thead>
                         <tr>
@@ -50,6 +51,7 @@ function MainPage(props) {
                     </tr>
                     </tbody>
                 </Table>
+                </form>
                 <div className="flex justify-between mx-3">
                     <Button variant="primary"
                             size="sm"

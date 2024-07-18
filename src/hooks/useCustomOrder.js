@@ -9,17 +9,17 @@ const useCustomOrder = () => {
         setOrders(orders.concat(product))
     }
 
-    const removeOrder = (product) => {
-        const modifiedOrders = orders.filter((order) => order.id !== product.id)
+    const removeOrder = (order) => {
+        const modifiedOrders = orders.filter((item) => item.ono !== order.ono)
 
         setOrders(modifiedOrders)
     }
 
-    const modifyOrder = (product) => {
+    const modifyOrder = (item) => {
 
-        let orderList = [...orders].map((order) => {
-            if (order.id === product.id) {
-                return {...order, qty: product.qty}
+        let orderList = orders.map((order) => {
+            if (item.ono === order.ono) {
+                return {...order, name: item.name, qty: item.qty, price: item.price}
             } else {
                 return order
             }
@@ -28,11 +28,17 @@ const useCustomOrder = () => {
         setOrders(orderList)
     }
 
-    const orderCheck = (productId) => {
+    const orderCheck = (selectedProduct) => {
         let res = false;
-        [...orders].forEach((order) => {
-            res = order.id === productId
+        orders.forEach((order) => {
+            console.log("order.ono :" + order.ono)
+            console.log("selected.ono :" + selectedProduct.ono)
+            res = order.ono === selectedProduct.ono
         })
+
+        console.log("checked")
+        console.log(res)
+
         return res
     }
 

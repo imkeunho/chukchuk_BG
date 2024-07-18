@@ -4,7 +4,8 @@ import {Button} from "react-bootstrap";
 import useCustomOrder from "../hooks/useCustomOrder";
 
 const initState = {
-    id: 0,
+    ono: 0,
+    pno: 0,
     name: '',
     description: '',
     price: 0,
@@ -17,37 +18,39 @@ function ProductComponent({id, product}) {
 
     const [selectedProduct, setSelectedProduct] = useState(initState);
 
-    const getProduct = (e) => {
+    const changeNameHandler = (e) => {
 
-        // let productList = [...products].map((product) => {
-        //     if (product.name === e.target.value) {
-        //         return {...product, selected: true}
-        //     } else {
-        //         return product
-        //     }
-        // })
-        // setProducts(productList)
-
+        //name 으로 products 에서 product 찾기
         const selected = product.find((element) => element.name === e.target.value)
 
-        setSelectedProduct({...selected})
+        setSelectedProduct({...selected, ono: id, qty: 0})
+        console.log("selectedProduct")
+        console.log(selected)
+        console.log("---------------------------------")
+        console.log("selectedProduct")
+        console.log(selectedProduct)
+
+        //order 에 등록된 selectBox 인지 확인
+        if (orderCheck(selectedProduct)) {
+            console.log("name - modify call")
+            modifyOrder(selectedProduct)
+        } else {
+            console.log("name - add call")
+            addOrder(selectedProduct)
+        }
     }
 
-    const setQty = (e) => {
+    const changeQtyHandler = (e) => {
 
         selectedProduct[e.target.name] = e.target.value
 
         setSelectedProduct({...selectedProduct})
 
-        console.log("selected product : ");
-        console.log(selectedProduct);
 
-        if (orderCheck(selectedProduct.id)) {
+        if (orderCheck(selectedProduct)) {
+            console.log("수량변경 이건 무조건임...!!")
             modifyOrder(selectedProduct)
-        } else {
-            addOrder(selectedProduct)
         }
-
     }
 
     const removeSelectBox = (index) => {
@@ -66,18 +69,19 @@ function ProductComponent({id, product}) {
             <td>
                 <Form.Select size="sm"
                              name="name"
-                             onChange={getProduct}>
+                             value={selectedProduct.name}
+                             onChange={changeNameHandler}>
                     {product.map(item =>
                         !item.selected ?
-                            <option key={item.id}>{item.name}</option>
+                            <option key={item.pno}>{item.name}</option>
                             :
-                            <option disabled={true} key={item.id}>{item.name}</option>)}
+                            <option disabled={true} key={item.pno}>{item.name}</option>)}
                 </Form.Select>
             </td>
             <td>
                 <Form.Select size="sm"
                              name="qty"
-                             onChange={setQty}>
+                             onChange={changeQtyHandler}>
                     <option>0</option>
                     <option>1</option>
                     <option>2</option>
@@ -95,6 +99,8 @@ function ProductComponent({id, product}) {
                         onClick={() => removeSelectBox(id)} >
                     -
                 </Button>
+                <Button onClick={() => console.log(selectedProduct)}>sel</Button>
+                <Button onClick={() => console.log(id)}>id</Button>
             </td>
         </tr>
     );
