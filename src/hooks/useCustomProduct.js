@@ -20,7 +20,18 @@ const useCustomProduct = () => {
         }
     }, [query.isSuccess]);
 
-    return {products, setProducts}
+    const setIsSelected = (option, flag) => {
+        const optionList = products.map((product) => {
+            if (product.name === option.name) {
+                return {...product, selected: flag === 1}
+            } else {
+                return product
+            }
+        })
+        setProducts(optionList)
+    }
+
+    return {products, setIsSelected}
 }
 
 export default useCustomProduct
