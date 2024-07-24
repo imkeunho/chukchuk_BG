@@ -33,9 +33,14 @@ function ItemPage(props) {
     const navigate = useNavigate()
 
     useEffect(() => {
-        setItems(items.concat(products))
+        setItems(products)
+
+        return () => {
+            setItems([])
+        }
 
     }, [products]);
+
 
     const removeItem = (index) => {
         const modifiedItems = [...items]

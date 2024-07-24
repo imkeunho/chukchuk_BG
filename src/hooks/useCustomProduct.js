@@ -8,17 +8,17 @@ const useCustomProduct = () => {
 
     const [products, setProducts] = useRecoilState(productState);
 
-    const query = useQuery({
+    const {data, isFetched, isSuccess} = useQuery({
         queryKey: ['products'],
         queryFn: getList,
         staleTime: 1000 * 60 * 60
     });
 
     useEffect(() => {
-        if (query.isSuccess) {
-            setProducts(query.data)
+        if (isSuccess) {
+            setProducts(data)
         }
-    }, [query.isSuccess]);
+    }, [data, isSuccess, isFetched]);
 
     const setIsSelected = (option, flag) => {
         const optionList = products.map((product) => {

@@ -19,17 +19,18 @@ const orderInit = [{
     selected: false
 }]
 
-const addrInit = {
+const orderInfoInit = {
     dong: '',
     ho: '',
-    account: ''
+    account: '',
+    cashReceipt: ''
 }
 
 function OrderPage() {
 
     const [orders, setOrders] = useState(orderInit);
 
-    const [addr, setAddr] = useState(addrInit);
+    const [orderInfo, setOrderInfo] = useState(orderInfoInit);
 
     const [total, setTotal] = useState(0);
 
@@ -45,7 +46,7 @@ function OrderPage() {
         // qty === 0 제외
         const filteringOrderList = orders.filter((item) => item.qty !== 0)
 
-        const orderSheet = {items: [...filteringOrderList], ...addr}
+        const orderSheet = {items: [...filteringOrderList], ...orderInfo}
         console.log("orderSheet")
         console.log(orderSheet)
 
@@ -92,9 +93,9 @@ function OrderPage() {
 
     }
 
-    const addrChangeHandler = (e) => {
-        addr[e.target.name] = e.target.value
-        setAddr({...addr})
+    const orderInfoChangeHandler = (e) => {
+        orderInfo[e.target.name] = e.target.value
+        setOrderInfo({...orderInfo})
     }
 
     const closeModal = () => {
@@ -203,9 +204,9 @@ function OrderPage() {
                                     placeholder="동"
                                     aria-describedby="inputGroup-sizing-sm"
                                     name="dong"
-                                    value={addr.dong}
+                                    value={orderInfo.dong}
                                     type="number"
-                                    onChange={addrChangeHandler}
+                                    onChange={orderInfoChangeHandler}
                                 />
                             </InputGroup>
                         </div>
@@ -215,9 +216,9 @@ function OrderPage() {
                                     placeholder="호"
                                     aria-describedby="inputGroup-sizing-sm"
                                     name="ho"
-                                    value={addr.ho}
+                                    value={orderInfo.ho}
                                     type="number"
-                                    onChange={addrChangeHandler}
+                                    onChange={orderInfoChangeHandler}
                                 />
                             </InputGroup>
                         </div>
@@ -227,8 +228,19 @@ function OrderPage() {
                                     placeholder="입금자명"
                                     aria-describedby="inputGroup-sizing-sm"
                                     name="account"
-                                    value={addr.account}
-                                    onChange={addrChangeHandler}
+                                    value={orderInfo.account}
+                                    onChange={orderInfoChangeHandler}
+                                />
+                            </InputGroup>
+                        </div>
+                        <div>
+                            <InputGroup size="sm" className="mb-3">
+                                <Form.Control
+                                    placeholder="현금영수증"
+                                    aria-describedby="inputGroup-sizing-sm"
+                                    name="cashReceipt"
+                                    value={orderInfo.cashReceipt}
+                                    onChange={orderInfoChangeHandler}
                                 />
                             </InputGroup>
                         </div>
