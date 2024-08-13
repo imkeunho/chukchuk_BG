@@ -1,14 +1,14 @@
 import React from 'react';
-import BasicLayout from "../layouts/BasicLayout";
+import BasicLayout from "../../layouts/BasicLayout";
 import {Outlet} from "react-router-dom";
 
-function MainPage(props) {
+function IndexPage(props) {
     return (
         <BasicLayout>
-            Main Page
+            Admin Page
             <Outlet/>
         </BasicLayout>
     );
 }
 
-export default MainPage;
+export default IndexPage;

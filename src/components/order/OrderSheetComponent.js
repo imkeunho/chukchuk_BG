@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import FetchingModal from "../common/FetchingModal";
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import {deleteOne, getItem, getList, putOne} from "../../api/orderApi";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const orderSheetInit = [{
     oid: 0,
@@ -33,6 +34,8 @@ function OrderSheetComponent() {
 
     const [orderItem, setOrderItem] = useState(orderItemInit);
 
+    const {exceptionHandle} = useCustomLogin();
+
     const [dong, setDong] = useState(0);
     const [dongList, setDongList] = useState([]);
 
@@ -59,7 +62,7 @@ function OrderSheetComponent() {
 
         getItem(dong).then(data => {
             setOrderItem(data)
-        })
+        }).catch(err => exceptionHandle(err));
 
     }, [dong, filtering]);
 
@@ -110,7 +113,7 @@ function OrderSheetComponent() {
         <>
             {isFetching ? <FetchingModal/> : <></>}
 
-            <div className="flex flex-row">
+            <div className="p-1 flex flex-row">
                 <div className="flex flex-row-reverse w-20 px-3">동 : </div>
                 <div className="w-20">
                     <Form.Select name="dong"
@@ -124,7 +127,7 @@ function OrderSheetComponent() {
                 </div>
             </div>
 
-            <Accordion alwaysOpen>
+            <Accordion className="p-1 mb-3" alwaysOpen>
                 {filtering && filtering?.map((order, index) => (
                     <Accordion.Item key={order.oid} eventKey={index}>
                         <Accordion.Button style={order.payment ? {backgroundColor: 'yellow'} : {}}>
@@ -154,24 +157,26 @@ function OrderSheetComponent() {
                     </Accordion.Item>
                 ))}
             </Accordion>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>상품명</th>
-                        <th>가격</th>
-                        <th>주문수량</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {orderItem && orderItem?.map((item, index) => (
-                    <tr key={index}>
-                        <td>{item.name}</td>
-                        <td>{item.price}</td>
-                        <td>{item.qty}</td>
-                    </tr>
-                ))}
-                </tbody>
-            </Table>
+            <div className="p-1">
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>상품명</th>
+                            <th>가격</th>
+                            <th>주문수량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {orderItem && orderItem?.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.name}</td>
+                            <td>{item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                            <td>{item.qty}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                </Table>
+            </div>
         </>
     );
 }

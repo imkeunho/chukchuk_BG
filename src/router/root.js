@@ -1,29 +1,23 @@
 import {lazy, Suspense} from "react";
+import adminRouter from "./adminRouter";
+import mainRouter from "./mainRouter";
 
 const {createBrowserRouter} = require("react-router-dom");
 
 const Loading = <div>Loading...</div>
-const Order = lazy(() => import("../pages/OrderPage"))
-const Item = lazy(() => import("../pages/ItemPage"))
 const Main = lazy(() => import("../pages/MainPage"))
-const Admin = lazy(() => import("../pages/AdminPage"))
+const Admin = lazy(() => import("../pages/admin/IndexPage"))
 
 const root = createBrowserRouter([
     {
         path: "",
-        element: <Suspense fallback={Loading}><Main/></Suspense>
-    },
-    {
-        path: "order",
-        element: <Suspense fallback={Loading}><Order/></Suspense>
-    },
-    {
-        path: "item",
-        element: <Suspense fallback={Loading}><Item/></Suspense>
+        element: <Suspense fallback={Loading}><Main/></Suspense>,
+        children: mainRouter()
     },
     {
         path: "admin",
-        element: <Suspense fallback={Loading}><Admin/></Suspense>
+        element: <Suspense fallback={Loading}><Admin/></Suspense>,
+        children: adminRouter()
     }
 ])
 

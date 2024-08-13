@@ -20,18 +20,7 @@ const useCustomProduct = () => {
         }
     }, [data, isSuccess, isFetched]);
 
-    const setIsSelected = (option, flag) => {
-        const optionList = products.map((product) => {
-            if (product.name === option.name) {
-                return {...product, selected: flag === 1}
-            } else {
-                return product
-            }
-        })
-        setProducts(optionList)
-    }
-
-    return {products, setIsSelected}
+    return {products}
 }
 
 export default useCustomProduct
