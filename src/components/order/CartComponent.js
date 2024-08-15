@@ -63,7 +63,7 @@ function CartComponent(props) {
 
             {addMutation.isSuccess ?
                 <ResultModal title={'주문 결과'}
-                             content={`주문이 정상 처리되었습니다. ^^ (주문번호 : ${addMutation.data.RESULT})
+                             content={`주문이 정상 처리되었습니다. ^^
                                         입금 확인 후 배송해 드리겠습니다!
                                         감사합니다!^^`}
                              callbackFn={closeModal}/>
@@ -75,8 +75,8 @@ function CartComponent(props) {
                         <Card.Img variant="left"
                                   className="w-40"
                                   src={`${host}/api/products/view/s_${item.uploadFileNames[0]}`}/>
-                        <Card.Body className="ml-8">
-                            <Card.Title>{item.name}</Card.Title>
+                        <Card.Body className="ml-5">
+                            <Card.Title>{item.name.toString().substring(0, 10)}</Card.Title>
                             <Card.Text>
                                 {(item.price * item.qty).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                             </Card.Text>
@@ -91,31 +91,31 @@ function CartComponent(props) {
                     </Card>
                 )}
             </div>
-            <div className="p-1">
+            <div className="m-1">
                 <p>주문 정보</p>
                 <Form>
-                    <Row className="mb-3">
-                        <FormGroup as={Col} controlId="dong">
+                    <div className="mb-3 flex justify-evenly">
+                        <FormGroup controlId="dong">
                             <Form.Label>동</Form.Label>
                             <Form.Control name="dong" onChange={orderInfoChangeHandler}/>
                         </FormGroup>
 
-                        <FormGroup as={Col} controlId="ho">
+                        <FormGroup controlId="ho">
                             <Form.Label>호</Form.Label>
                             <Form.Control name="ho" onChange={orderInfoChangeHandler}/>
                         </FormGroup>
-                    </Row>
-                    <Row className="mb-3">
-                        <FormGroup as={Col} controlId="account">
+                    </div>
+                    <div className="mb-3 flex justify-evenly">
+                        <FormGroup controlId="account">
                             <Form.Label>입금자명</Form.Label>
                             <Form.Control name="account" onChange={orderInfoChangeHandler}/>
                         </FormGroup>
 
-                        <FormGroup as={Col} controlId="cashReceipt">
+                        <FormGroup controlId="cashReceipt">
                             <Form.Label>현금영수증(연락처)</Form.Label>
                             <Form.Control name="cashReceipt" onChange={orderInfoChangeHandler}/>
                         </FormGroup>
-                    </Row>
+                    </div>
                     <div className="flex justify-around">
                         <div>
                             합계 : {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원

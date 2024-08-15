@@ -62,7 +62,7 @@ const useCustomLogin = () => {
         } else if (errorMsg === 'ERROR_ACCESS-DENIED') {
 
             alert("해당 메뉴를 사용할 수 있는 권한이 없습니다.");
-            navigate({pathname:'/admin/login' , search: errorStr});
+            navigate({pathname:'/'});
         }
     }
 

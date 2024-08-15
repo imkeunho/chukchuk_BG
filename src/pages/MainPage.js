@@ -5,7 +5,6 @@ import {Outlet} from "react-router-dom";
 function MainPage(props) {
     return (
         <BasicLayout>
-            Main Page
             <Outlet/>
         </BasicLayout>
     );

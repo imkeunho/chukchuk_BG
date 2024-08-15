@@ -5,6 +5,7 @@ import ResultModal from "../common/ResultModal";
 import FetchingModal from "../common/FetchingModal";
 import {useNavigate, useParams} from "react-router-dom";
 import {Button} from "react-bootstrap";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const initState = {
     pno: 0,
@@ -23,14 +24,16 @@ function ModifyComponent() {
 
     const [product, setProduct] = useState(initState);
 
+    const {exceptionHandle} = useCustomLogin();
+
     const navigate = useNavigate();
 
     const delMutation = useMutation({
-        mutationFn: (pno) => deleteOne(pno)
+        mutationFn: (pno) => deleteOne(pno).catch(err => exceptionHandle(err))
     });
 
     const modMutation = useMutation({
-        mutationFn: (product) => putOne(pno, product)
+        mutationFn: (product) => putOne(pno, product).catch(err => exceptionHandle(err))
     })
 
     const query = useQuery({

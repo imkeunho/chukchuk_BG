@@ -52,10 +52,12 @@ function ListComponent() {
                                   className="w-40"
                                   src={`${host}/api/products/view/s_${item.uploadFileNames[0]}`}
                                   onClick={() => clickHandler(item.pno)}/>
-                        <Card.Body className="ml-8">
-                            <Card.Title onClick={() => clickHandler(item.pno)}>{item.name}</Card.Title>
+                        <Card.Body className="ml-5">
+                            <Card.Title onClick={() => clickHandler(item.pno)}>
+                                {item.name.toString().substring(0, 10)}
+                            </Card.Title>
                             <Card.Text>
-                                {item.description}
+                                {item.description.toString().substring(0, 12)}
                             </Card.Text>
                             {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                             &nbsp;&nbsp;<Button size="sm"

@@ -5,6 +5,7 @@ import ResultModal from "../common/ResultModal";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
 import {Button} from "react-bootstrap";
+import useCustomLogin from "../../hooks/useCustomLogin";
 
 const initState = {
     name: '',
@@ -21,12 +22,12 @@ function AddComponent() {
 
     const uploadRef = useRef();
 
-    // const {moveToList} = useCustomMove();
+    const {exceptionHandle} = useCustomLogin();
 
     const navigate = useNavigate();
 
     const addMutation = useMutation({
-        mutationFn: (product) => postAdd(product)
+        mutationFn: (product) => postAdd(product).catch(err => exceptionHandle(err))
     });
 
     //multipart/form-data  FormData()
@@ -86,7 +87,10 @@ function AddComponent() {
                 />
                 : <></>
             }
-
+            <div className="mb-4">
+                * Product Name은 상품목록에선 10글자만 보임 <br/>
+                * Desc는 상품목록에선 12글자만 보임 <br/>
+            </div>
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 text-right font-bold">Product Name</div>

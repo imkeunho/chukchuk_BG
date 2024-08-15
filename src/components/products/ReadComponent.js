@@ -5,6 +5,7 @@ import {useQuery} from "@tanstack/react-query";
 import FetchingModal from "../common/FetchingModal";
 import {useNavigate, useParams} from "react-router-dom";
 import useCustomLogin from "../../hooks/useCustomLogin";
+import useCustomCart from "../../hooks/useCustomCart";
 
 const initState = {
     pno: 0,
@@ -22,6 +23,8 @@ function ReadComponent() {
     const {pno} = useParams();
 
     const {isLogin} = useCustomLogin()
+
+    const {addItem} = useCustomCart();
 
     const navigate = useNavigate()
 
@@ -42,7 +45,7 @@ function ReadComponent() {
         <>
             {isFetching ? <FetchingModal/> :<></>}
 
-            <div className="flex justify-center">
+            <div className="m-1 flex justify-center">
                 <Card style={{ width: '25rem' }}>
                     <Card.Img variant="top" src={`${host}/api/products/view/${product.uploadFileNames[0]}`}/>
                     <Card.Body>
@@ -51,7 +54,8 @@ function ReadComponent() {
                             {product.description}
                         </Card.Text>
                         {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-                        &nbsp;&nbsp;<Button variant="primary">담기</Button>
+                        &nbsp;&nbsp;<Button variant="primary"
+                                            onClick={() => addItem(product.pno)}>담기</Button>
                         {isLogin ?
                             <>
                                 &nbsp;&nbsp;<Button variant="warning"
