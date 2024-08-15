@@ -47,9 +47,9 @@ function ListComponent() {
 
             <div>
                 {serverData?.dtoList?.map((item, index) =>
-                    <Card key={index} className="m-1 flex flex-row">
+                    <Card key={index} className="m-1 flex flex-row" style={{height: '9rem'}}>
                         <Card.Img variant="left"
-                                  className="w-40"
+                                  style={{objectFit: "cover", width: '10rem'}}
                                   src={`${host}/api/products/view/s_${item.uploadFileNames[0]}`}
                                   onClick={() => clickHandler(item.pno)}/>
                         <Card.Body className="ml-5">
