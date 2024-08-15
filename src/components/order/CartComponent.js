@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import useCustomCart from "../../hooks/useCustomCart";
-import {Button, Card, Col, FormGroup, Row} from "react-bootstrap";
+import {Button, Card, FormGroup} from "react-bootstrap";
 import {API_SERVER_HOST, submit} from "../../api/productApi";
 import {useRecoilValue, useResetRecoilState} from "recoil";
 import {cartState, cartTotalPrice} from "../../atom/cartState";
@@ -71,9 +71,9 @@ function CartComponent(props) {
 
             <div className="mb-4">
                 {cartItems?.map((item, index) =>
-                    <Card key={index} className="m-1 flex flex-row">
+                    <Card key={index} className="m-1 flex flex-row" style={{height: '9rem'}}>
                         <Card.Img variant="left"
-                                  className="w-40"
+                                  style={{objectFit: "cover", width: '10rem'}}
                                   src={`${host}/api/products/view/s_${item.uploadFileNames[0]}`}/>
                         <Card.Body className="ml-5">
                             <Card.Title>{item.name.toString().substring(0, 10)}</Card.Title>
@@ -94,33 +94,33 @@ function CartComponent(props) {
             <div className="m-1">
                 <p>주문 정보</p>
                 <Form>
-                    <div className="mb-3 flex justify-evenly">
-                        <FormGroup controlId="dong">
+                    <div className="mb-3 flex flex-row">
+                        <FormGroup controlId="dong" className="mx-3" style={{width: '6rem'}}>
                             <Form.Label>동</Form.Label>
                             <Form.Control name="dong" onChange={orderInfoChangeHandler}/>
                         </FormGroup>
 
-                        <FormGroup controlId="ho">
+                        <FormGroup controlId="ho" className="mx-3" style={{width: '6rem'}}>
                             <Form.Label>호</Form.Label>
                             <Form.Control name="ho" onChange={orderInfoChangeHandler}/>
                         </FormGroup>
                     </div>
-                    <div className="mb-3 flex justify-evenly">
-                        <FormGroup controlId="account">
+                    <div className="mb-3 flex flex-row">
+                        <FormGroup controlId="account" className="mx-3" style={{width: '7rem'}}>
                             <Form.Label>입금자명</Form.Label>
                             <Form.Control name="account" onChange={orderInfoChangeHandler}/>
                         </FormGroup>
 
-                        <FormGroup controlId="cashReceipt">
+                        <FormGroup controlId="cashReceipt" className="mx-3" style={{width: '10rem'}}>
                             <Form.Label>현금영수증(연락처)</Form.Label>
                             <Form.Control name="cashReceipt" onChange={orderInfoChangeHandler}/>
                         </FormGroup>
                     </div>
-                    <div className="flex justify-around">
-                        <div>
+                    <div className="flex flex-row">
+                        <div className="mx-5 content-center">
                             합계 : {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
                         </div>
-                        <div>
+                        <div className="mx-3">
                             <Button onClick={orderBtnHandler}>주문</Button>
                         </div>
                     </div>
