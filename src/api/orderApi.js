@@ -19,9 +19,23 @@ export const deleteOne = async (ono) => {
     return res.data
 }
 
-export const putOne = async (ono) => {
+export const putOnePayment = async (ono) => {
 
-    const res = await jwtAxios.put(`${host}/${ono}`)
+    const res = await jwtAxios.put(`${host}/payment/${ono}`)
+
+    return res.data
+}
+
+export const putOneComplete = async (ono) => {
+
+    const res = await jwtAxios.put(`${host}/complete/${ono}`)
+
+    return res.data
+}
+
+export const putFreezing = async () => {
+
+    const res = await jwtAxios.put(`${host}/complete/all`)
 
     return res.data
 }

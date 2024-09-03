@@ -1,71 +1,37 @@
-import React from 'react';
-import {Button, Card} from "react-bootstrap";
-import {API_SERVER_HOST, getList} from "../../api/productApi";
-import {useQuery} from "@tanstack/react-query";
-import FetchingModal from "../common/FetchingModal";
-import {useNavigate} from "react-router-dom";
-import useCustomCart from "../../hooks/useCustomCart";
-
-const initState = {
-    dtoList:[],
-    pageNumList:[],
-    pageRequestDTO: null,
-    prev: false,
-    next: false,
-    totalCount: 0,
-    prevPage: 0,
-    nextPage: 0,
-    totalPage: 0,
-    current: 0
-}
-
-const host = API_SERVER_HOST
+import React, {useEffect} from 'react';
+import useCustomProduct from "../../hooks/useCustomProduct";
+import CardComponent from "./CardComponent";
+import {useInView} from "react-intersection-observer";
+import PlaceholderComponent from "./PlaceholderComponent";
 
 function ListComponent() {
 
-    const {addItem} = useCustomCart();
+    const {data,isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, isError} = useCustomProduct();
 
-    const navigate = useNavigate();
+    const {ref, inView} = useInView();
 
-    const {data, isFetching} = useQuery({
-        queryKey: ['products/list'],
-        queryFn: () => getList({page: 1, size: 100}),
-        staleTime: 1000 * 60 * 60
-    });
+    useEffect(() => {
+        if (inView) {
+            fetchNextPage()
+        }
+    }, [inView]);
 
-    const serverData = data || initState
-
-    const clickHandler = (pno) => {
-        navigate({
-            pathname: `../pno/${pno}`
-        })
+    if (isError) {
+        alert('점검중 입니다.')
     }
 
     return (
         <>
-            {isFetching ? <FetchingModal/> :<></>}
+            {isLoading ? <PlaceholderComponent/> : <></>}
 
             <div>
-                {serverData?.dtoList?.map((item, index) =>
-                    <Card key={index} className="m-1 flex flex-row" style={{height: '9rem'}}>
-                        <Card.Img variant="left"
-                                  style={{objectFit: "cover", width: '10rem'}}
-                                  src={`${host}/api/products/view/s_${item.uploadFileNames[0]}`}
-                                  onClick={() => clickHandler(item.pno)}/>
-                        <Card.Body className="ml-5">
-                            <Card.Title onClick={() => clickHandler(item.pno)}>
-                                {item.name.toString().substring(0, 10)}
-                            </Card.Title>
-                            <Card.Text>
-                                {item.description.toString().substring(0, 12)}
-                            </Card.Text>
-                            {item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원
-                            &nbsp;&nbsp;<Button size="sm"
-                                                variant="primary"
-                                                onClick={() => addItem(item.pno)}>담기</Button>
-                        </Card.Body>
-                    </Card>
-                )}
+                {data && data.pages.map((pageData) => {
+                    const products = pageData.dtoList;
+                    return products.map((product, index) =>
+                        <CardComponent key={index} product={{...product}}/>
+                    )
+                })}
+                {data && (isFetchingNextPage ? <PlaceholderComponent/> : hasNextPage ? <div ref={ref}>&nbsp;</div> : <></>)}
             </div>
         </>
     );

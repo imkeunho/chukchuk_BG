@@ -37,6 +37,22 @@ function CartComponent(props) {
 
     const orderBtnHandler = () => {
 
+        if (cartItems.length === 0) {
+            alert("장바구니에 상품이 없습니다. ㅜㅜ")
+            return;
+        }
+        if (orderInfo.dong === '') {
+            alert("'동'을 입력해 주세요.")
+            return;
+        }
+        if (orderInfo.ho === '') {
+            alert("'호'를 입력해 주세요.")
+            return;
+        }
+        if (orderInfo.account === '') {
+            alert("'입금자명'을 입력해 주세요.")
+            return;
+        }
         const orderSheet = {items: [...cartItems], ...orderInfo}
         console.log("orderSheet")
         console.log(orderSheet)
