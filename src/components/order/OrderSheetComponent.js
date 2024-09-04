@@ -65,7 +65,7 @@ function OrderSheetComponent() {
             setOrderItem(data)
         }).catch(err => exceptionHandle(err));
 
-    }, [dong, filtering]);
+    }, [dong]);
 
     const changeHandler = (e) => {
 
