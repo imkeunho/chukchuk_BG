@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {postAdd} from "../../api/productApi";
 import FetchingModal from "../common/FetchingModal";
 import ResultModal from "../common/ResultModal";
@@ -22,13 +22,20 @@ function AddComponent() {
 
     const uploadRef = useRef();
 
-    const {exceptionHandle} = useCustomLogin();
+    const {isLogin, exceptionHandle} = useCustomLogin();
 
     const navigate = useNavigate();
 
     const addMutation = useMutation({
         mutationFn: (product) => postAdd(product).catch(err => exceptionHandle(err))
     });
+
+    useEffect(() => {
+        if (!isLogin) {
+            alert('잘못된 접근(권한 없음) 입니다.')
+            navigate({pathname: '/'}, {replace: true})
+        }
+    }, []);
 
     //multipart/form-data  FormData()
 
